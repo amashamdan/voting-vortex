@@ -3,9 +3,14 @@ var express = require("express");
 var mongodb = require("mongodb");
 var app = express();
 
-var MongoClient = mongodb.MongoClient;
+//var MongoClient = mongodb.MongoClient;
 /* The url to connect to the database is saved in environment variables. */
-var mongoUrl = process.env.SEARCH_HISTORY;
+//var mongoUrl = process.env.SEARCH_HISTORY;
+
+app.get("/", function(req, res) {
+	app.use("/stylesheets", express.static(__dirname + "/stylesheets"));
+	res.sendFile(__dirname + "/index.html");
+})
 
 // port 3000 used for localhost during development.
 var port = Number(process.env.PORT || 3000)
