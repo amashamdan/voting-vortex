@@ -38,16 +38,34 @@ body {
 /* line 30, ../sass/screen.scss */
 .poll-list {
   color: #297854;
-  border: 1px solid #297854;
   text-align: center;
 }
 
-/* line 35, ../sass/screen.scss */
+/* line 34, ../sass/screen.scss */
+.poll-item {
+  display: none;
+  text-align: left;
+  list-style: none;
+  border: 1px solid #297854;
+  padding: 5px;
+  margin: 5px 0 0 0;
+  border-radius: 5px;
+}
+/* line 42, ../sass/screen.scss */
+.poll-item:hover {
+  cursor: pointer;
+}
+/* line 45, ../sass/screen.scss */
+.poll-item span {
+  font-size: 0.8em;
+}
+
+/* line 49, ../sass/screen.scss */
 .footer {
   color: #297854;
   font-size: 0.75em;
 }
-/* line 38, ../sass/screen.scss */
+/* line 52, ../sass/screen.scss */
 .footer a {
   color: #297854;
 }

@@ -29,8 +29,22 @@ body {
 }
 .poll-list {
 	color: $theme-color;
-	border: 1px solid $theme-color;
 	text-align: center;
+}
+.poll-item {
+	display: none;
+	text-align: left;
+	list-style: none;
+	border: 1px solid $theme-color;
+	padding: 5px;
+	margin: 5px 0 0 0;
+	border-radius: 5px;
+	&:hover {
+		cursor: pointer;
+	}
+	span {
+		font-size: 0.8em;
+	}
 }
 .footer {
 	color: $theme-color;
