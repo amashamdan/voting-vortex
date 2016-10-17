@@ -10,6 +10,7 @@
   "author": "Amer Hamdan",
   "license": "ISC",
   "dependencies": {
+    "ejs": "^2.5.2",
     "express": "^4.14.0",
     "mongodb": "^2.2.10"
   }
