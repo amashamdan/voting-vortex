@@ -40,7 +40,8 @@
 				for (var entry in data) {
 					var poll = data[entry].name;
 					var votes = data[entry].votes;
-					$(".poll-list").append("<li id="+poll+" class='poll-item'><a href='/polls/"+poll+"'>"+poll+" <span>("+votes+" voted!)</span></a></li>");
+					var id = data[entry].id;
+					$(".poll-list").append("<li id="+poll+" class='poll-item'><a href='/polls/"+id+"'>"+poll+" <span>("+votes+" voted!)</span></a></li>");
 					$(".poll-item").slideDown();
 				}
 			});
