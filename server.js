@@ -8,12 +8,13 @@ var MongoClient = mongodb.MongoClient;
 var mongoUrl = process.env.VOTE;
 console.log(mongoUrl);
 
+app.use("/stylesheets", express.static(__dirname + "/views/stylesheets"));
+
 app.get("/", function(req, res) {
-	app.use("/stylesheets", express.static(__dirname + "/stylesheets"));
-	res.sendFile(__dirname + "/index.html");
+	res.sendFile(__dirname + "/views/index.html");
 })
 
-app.get("/test", function(req, res) {
+app.get("/home", function(req, res) {
 	MongoClient.connect(mongoUrl, function(err, db) {
 		if (err) {
 			res.send("Error connecting to database: " + err);
@@ -29,6 +30,14 @@ app.get("/test", function(req, res) {
 	});	
 })
 
+app.get("/polls/:poll", function(req, res) {
+	var votes = 55;
+	res.locals = {poll: req.params.poll, votes: votes};
+	res.render('poll.ejs');
+})
+
+
+
 // port 3000 used for localhost during development.
-var port = Number(process.env.PORT || 3000)
+var port = Number(process.env.PORT || 8081)
 app.listen(port);
