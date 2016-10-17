@@ -1,0 +1,56 @@
+$theme-color: #297854;
+
+body {
+	font-family: 'Raleway', sans-serif;
+}
+.container {
+	width: 100%;
+	max-width: 900px;
+	margin: 0 auto;
+}
+.menu {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	background-color: $theme-color;
+	color: white;
+	padding: 0 20px 0 20px;
+}
+.sign-in {
+	background-color: white;
+	color: $theme-color;
+	border: none;
+	padding: 5px;
+	width: 75px;
+}
+.information {
+	color: $theme-color;
+}
+.poll-list {
+	color: $theme-color;
+	text-align: center;
+}
+.poll-item {
+	display: none;
+	text-align: left;
+	list-style: none;
+	border: 1px solid $theme-color;
+	padding: 5px;
+	margin: 5px 0 0 0;
+	border-radius: 5px;
+	span {
+		font-size: 0.8em;
+	}
+	a {
+		color: $theme-color;
+		text-decoration: none;
+	}
+}
+.footer {
+	color: $theme-color;
+	font-size: 0.75em;
+	a {
+		color: $theme-color;
+	}
+}
