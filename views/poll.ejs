@@ -15,7 +15,7 @@
 			<button class="sign-in">Sign in</button>
 		</div>
 		
-		<h1><%=poll%></h1>
+		<h1><%=name%></h1>
 		<h2>Number of votes: <%=votes%></h2>
 
 		<hr/>
@@ -34,15 +34,7 @@
 	</div>
 	<script>
 		$(document).ready(function() {
-			$.get("/home", function(data) {
-				$(".poll-list").empty();
-				for (var entry in data) {
-					var poll = data[entry].name;
-					var votes = data[entry].votes;
-					$(".poll-list").append("<li id="+poll+" class='poll-item'><a href='/polls/"+poll+"'>"+poll+" <span>("+votes+" voted!)</span></a></li>");
-					$(".poll-item").slideDown();
-				}
-			});
+			console.log(<%=votes%>);
 		})
 	</script>
 </body>
