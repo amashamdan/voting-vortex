@@ -47,10 +47,39 @@ body {
 		text-decoration: none;
 	}
 }
+#chart {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+}
+#wrapper, .vote-form {
+	width: 50%;
+	max-width: 500px;
+}
+.vote-form {
+	input {
+		margin: 5px;
+	}
+}
+.vote-button {
+	padding: 5px;
+	width: 150px;
+	color: white;
+	background-color: $theme-color;
+	border: none;
+	margin: 15px 5px 20px 5px !important;
+}
 .footer {
 	color: $theme-color;
 	font-size: 0.75em;
 	a {
 		color: $theme-color;
+	}
+}
+
+@media screen and (max-width: 650px) {
+	#wrapper, .vote-form {
+		width: 100%;
 	}
 }

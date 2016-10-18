@@ -62,11 +62,47 @@ body {
 }
 
 /* line 50, ../sass/screen.scss */
+#chart {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* line 56, ../sass/screen.scss */
+#wrapper, .vote-form {
+  width: 50%;
+  max-width: 500px;
+}
+
+/* line 61, ../sass/screen.scss */
+.vote-form input {
+  margin: 5px;
+}
+
+/* line 65, ../sass/screen.scss */
+.vote-button {
+  padding: 5px;
+  width: 150px;
+  color: white;
+  background-color: #297854;
+  border: none;
+  margin: 15px 5px 20px 5px !important;
+}
+
+/* line 73, ../sass/screen.scss */
 .footer {
   color: #297854;
   font-size: 0.75em;
 }
-/* line 53, ../sass/screen.scss */
+/* line 76, ../sass/screen.scss */
 .footer a {
   color: #297854;
+}
+
+@media screen and (max-width: 650px) {
+  /* line 82, ../sass/screen.scss */
+  #wrapper, .vote-form {
+    width: 100%;
+  }
 }
