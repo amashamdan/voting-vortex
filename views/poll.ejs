@@ -17,10 +17,23 @@
 			<button class="sign-in">Sign in</button>
 		</div>
 		
-		<h1><%=name%></h1>
-		<h2>Number of votes: <%=votes%></h2>
-		<div id="chart"></div>
-		<canvas id="myChart"></canvas>
+		<h3><%=name%></h3>
+		<h4>Number of votes: <%=votes%></h4>
+		<div id="chart">
+		
+			<form class="vote-form">
+				<p>If you haven't done so yet, please cast your vote!</p>
+				<% for (var item in list) { %>
+					<input type="radio" name="option"><%= item %><br/>
+				<%	}; %>
+				<input class="vote-button" type="submit" value="Send to the vortex">
+			</form>
+
+			<div id="wrapper">
+				<canvas id="myChart" width="1" height="1"></canvas>
+			</div>
+		</div>
+		
 		<hr/>
 		<div class="footer">
 			<div class="author">
@@ -60,7 +73,7 @@
 
 		var ctx = document.getElementById("myChart");
 		var myChart = new Chart(ctx, {
-		    type: 'pie',
+		    type: 'doughnut',
 		    data: data
 		});
 
