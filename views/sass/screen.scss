@@ -17,12 +17,15 @@ body {
 	color: white;
 	padding: 0 20px 0 20px;
 }
-.sign-in {
+.button {
 	background-color: white;
 	color: $theme-color;
 	border: none;
 	padding: 5px;
 	width: 75px;
+	&:hover {
+		cursor: pointer;
+	}
 }
 .information {
 	color: $theme-color;
@@ -69,6 +72,9 @@ body {
 	background-color: $theme-color;
 	border: none;
 	margin: 15px 5px 20px 5px !important;
+	&:hover {
+		cursor: pointer;
+	}
 }
 .footer {
 	color: $theme-color;
