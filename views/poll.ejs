@@ -7,6 +7,8 @@
 	<!-- The '/' is necessary before the path in href, without it the file won't be found. -->
 	<link rel="stylesheet" href="/stylesheets/screen.css"/>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.bundle.min.js"></script>
+	
 </head>
 <body>
 	<div class="container">
@@ -17,7 +19,8 @@
 		
 		<h1><%=name%></h1>
 		<h2>Number of votes: <%=votes%></h2>
-
+		<div id="chart"></div>
+		<canvas id="myChart"></canvas>
 		<hr/>
 		<div class="footer">
 			<div class="author">
@@ -33,9 +36,34 @@
 		</div>
 	</div>
 	<script>
-		$(document).ready(function() {
-			console.log(<%=votes%>);
-		})
+		var name = <%- JSON.stringify(name) %>;
+		var list = <%- JSON.stringify(list) %>;
+		var poll = <%- JSON.stringify(poll) %>;
+		var votes = <%- JSON.stringify(votes) %>;
+		var colors = ["#8dd3c7", "#ffffb3", "#bebada", "#fb8072", "#80b1d3", "#fdb462", "#b3de69", "#fccde5", "#d9d9d9", "#bc80bd", "#ccebc5", "#ffed6f"];
+		var data = {};
+		data.labels = [];
+		data.datasets = [{}];
+		data.datasets[0].data = [];
+		data.datasets[0].backgroundColor = [];
+		var colorCounter = 0;
+		for (var entry in list) {
+			data.labels.push(entry);
+			data.datasets[0].data.push(list[entry]);
+			data.datasets[0].backgroundColor.push(colors[colorCounter]);
+			if ((colorCounter+1) < colors.length) {
+				colorCounter++;
+			} else {
+				colorCounter = 0;
+			}
+		}
+
+		var ctx = document.getElementById("myChart");
+		var myChart = new Chart(ctx, {
+		    type: 'pie',
+		    data: data
+		});
+
 	</script>
 </body>
 </html>
