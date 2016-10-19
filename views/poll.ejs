@@ -24,10 +24,12 @@
 		<h4>Number of votes: <%=votes%></h4>
 		<div id="chart">
 		
-			<form class="vote-form">
+			<form class="vote-form" method="post">
 				<p>If you haven't done so yet, please cast your vote!</p>
 				<% for (var item in list) { %>
-					<input type="radio" name="option"><%= item %><br/>
+					<!-- stringify is important, without it, anything after space is ignored. 
+					It is necessary for all inputs to be set to the same name, this will allow the user to select only one option. The value is needed at the server end coz it defines the selected input. -->
+					<input type="radio" name="option" value=<%- JSON.stringify(item) %>><%= item %><br/>
 				<%	}; %>
 				<input class="vote-button" type="submit" value="Send to the vortex">
 			</form>
