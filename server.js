@@ -1,7 +1,10 @@
 /* load needed packages/ */
 var express = require("express");
 var mongodb = require("mongodb");
-var ObjectId = require('mongodb').ObjectID;
+var ejs = require("ejs");
+var ObjectId = require("mongodb").ObjectID;
+var bodyParser = require("body-parser");
+var parser = bodyParser.urlencoded({extended: false});
 var app = express();
 
 var MongoClient = mongodb.MongoClient;
@@ -44,7 +47,24 @@ MongoClient.connect(mongoUrl, function(err, db) {
 					res.locals = {name: name, poll: req.params.poll, votes: votes, list: list};
 					res.render('poll.ejs');
 			})
-		})
+		});
+
+		app.post("/polls/:poll", parser, function(req, res) {
+			var selectedOption = req.body.option;
+			/* TO USE A VARIABLE AS A KEY TO UPDATE A NESTED DOCUMENT. The path in database to update the selected country is saved as string. In the update function this variable is used between square brackets and without the quotation marks. "qaz" or qaz or oprion.selectedOption all generate errors or create a new property. */
+			var optionPath = "options." + selectedOption;
+			polls.update(
+				{"_id": ObjectId(req.params.poll)},
+				{"$inc": {[optionPath]: 1}}
+			);
+			polls.find({"_id": ObjectId(req.params.poll)}).toArray(function(err, result) {
+					var name = result[0].name;
+					var list = result[0].options;
+					var votes = countVotes(list);
+					res.locals = {name: name, poll: req.params.poll, votes: votes, list: list};
+					res.render('poll.ejs');
+			})
+		});
 	}
 });
 
