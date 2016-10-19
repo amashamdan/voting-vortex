@@ -58,6 +58,9 @@
 		var list = <%- JSON.stringify(list) %>;
 		var poll = <%- JSON.stringify(poll) %>;
 		var votes = <%- JSON.stringify(votes) %>;
+		var ipaddress = <%- JSON.stringify(ipaddress) %>;
+		var voters = <%- JSON.stringify(voters) %>;
+		
 		var colors = ["#8dd3c7", "#ffffb3", "#bebada", "#fb8072", "#80b1d3", "#fdb462", "#b3de69", "#fccde5", "#d9d9d9", "#bc80bd", "#ccebc5", "#ffed6f"];
 		var data = {};
 		data.labels = [];
@@ -85,7 +88,15 @@
 		$(".vote-form").on("submit", function(e) {
 			e.preventDefault();
 			/* from: http://stackoverflow.com/questions/1423777/how-can-i-check-whether-a-radio-button-is-selected-with-javascript */
-			if ($('input[name=option]:checked').length > 0) {
+			var votedBefore = false;
+			for (var voter in voters) {
+				if (ipaddress == voters[voter]) {
+					votedBefore = true;
+				}
+			}
+			if (votedBefore) {
+				alert("Sorry voter, you have already voted. Cannot vote again that would be unfair :)");
+			} else if ($('input[name=option]:checked').length > 0) {
 				e.target.submit();
 			} else {
 				alert("Please select an option to vote for.");

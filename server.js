@@ -6,7 +6,6 @@ var ObjectId = require("mongodb").ObjectID;
 var bodyParser = require("body-parser");
 var parser = bodyParser.urlencoded({extended: false});
 var app = express();
-
 var MongoClient = mongodb.MongoClient;
 /* The url to connect to the database is saved in environment variables. */
 var mongoUrl = process.env.VOTE;
@@ -40,30 +39,39 @@ MongoClient.connect(mongoUrl, function(err, db) {
 		});
 
 		app.get("/polls/:poll", function(req, res) {
-			renderPoll(res, polls, req.params.poll);
+			var ipaddress = req.headers['x-forwarded-for'] || req.connection.remoteAddress || req.socket.remoteAddress || req.connection.socket.remoteAddress;
+			renderPoll(res, polls, req.params.poll, ipaddress);
 		});
 
 		app.post("/polls/:poll", parser, function(req, res) {
+			var ipaddress = req.headers['x-forwarded-for'] || req.connection.remoteAddress || req.socket.remoteAddress || req.connection.socket.remoteAddress;
 			var selectedOption = req.body.option;
 			/* TO USE A VARIABLE AS A KEY TO UPDATE A NESTED DOCUMENT. The path in database to update the selected country is saved as string. In the update function this variable is used between square brackets and without the quotation marks. "qaz" or qaz or oprion.selectedOption all generate errors or create a new property. */
 			var optionPath = "options." + selectedOption;
+			/* Notice the callback function only calls the renderPoll function (making the call synchronous). If renderPoll itself was used as callback (without placing it in a function), a bug occurs where the shown results are always 1 vote behind (last vote won't show). */
 			polls.update(
 				{"_id": ObjectId(req.params.poll)},
-				{"$inc": {[optionPath]: 1}},
+				{"$inc": {[optionPath]: 1}, "$push": {"voters": ipaddress}},
 				function() {
-					renderPoll(res, polls, req.params.poll)
+					renderPoll(res, polls, req.params.poll, ipaddress);
 				}
 			);
 		});
 	}
 });
 
-function renderPoll(res, polls, poll) {
+function renderPoll(res, polls, poll, ipaddress) {
 	polls.find({"_id": ObjectId(poll)}).toArray(function(err, result) {
 		var name = result[0].name;
 		var list = result[0].options;
+		/* If voters array is non-existent (nobody voted yet), voters array will be undefined which will result in error in ejs. So it is set to empty array if it's undefined. */
+		if (result[0].voters) {
+			var voters = result[0].voters;
+		} else {
+			voters = [];
+		}
 		var votes = countVotes(list);
-		res.locals = {name: name, poll: poll, votes: votes, list: list};
+		res.locals = {name: name, poll: poll, votes: votes, list: list, ipaddress: ipaddress, voters: voters};
 		res.render('poll.ejs');
 	})
 }
@@ -79,3 +87,8 @@ function countVotes(list) {
 // port 3000 used for localhost during development.
 var port = Number(process.env.PORT || 8085)
 app.listen(port);
+
+/* THINGs to do:
+- fix heeader and footer (style)
+- prevent multiple voting from same user.
+- reload only chart and no.of votes upon submission. */
