@@ -49,9 +49,11 @@ MongoClient.connect(mongoUrl, function(err, db) {
 			var optionPath = "options." + selectedOption;
 			polls.update(
 				{"_id": ObjectId(req.params.poll)},
-				{"$inc": {[optionPath]: 1}}
+				{"$inc": {[optionPath]: 1}},
+				function() {
+					renderPoll(res, polls, req.params.poll)
+				}
 			);
-			renderPoll(res, polls, req.params.poll);
 		});
 	}
 });
