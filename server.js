@@ -40,13 +40,7 @@ MongoClient.connect(mongoUrl, function(err, db) {
 		});
 
 		app.get("/polls/:poll", function(req, res) {
-			polls.find({"_id": ObjectId(req.params.poll)}).toArray(function(err, result) {
-					var name = result[0].name;
-					var list = result[0].options;
-					var votes = countVotes(list);
-					res.locals = {name: name, poll: req.params.poll, votes: votes, list: list};
-					res.render('poll.ejs');
-			})
+			renderPoll(res, polls, req.params.poll);
 		});
 
 		app.post("/polls/:poll", parser, function(req, res) {
@@ -57,16 +51,20 @@ MongoClient.connect(mongoUrl, function(err, db) {
 				{"_id": ObjectId(req.params.poll)},
 				{"$inc": {[optionPath]: 1}}
 			);
-			polls.find({"_id": ObjectId(req.params.poll)}).toArray(function(err, result) {
-					var name = result[0].name;
-					var list = result[0].options;
-					var votes = countVotes(list);
-					res.locals = {name: name, poll: req.params.poll, votes: votes, list: list};
-					res.render('poll.ejs');
-			})
+			renderPoll(res, polls, req.params.poll);
 		});
 	}
 });
+
+function renderPoll(res, polls, poll) {
+	polls.find({"_id": ObjectId(poll)}).toArray(function(err, result) {
+		var name = result[0].name;
+		var list = result[0].options;
+		var votes = countVotes(list);
+		res.locals = {name: name, poll: poll, votes: votes, list: list};
+		res.render('poll.ejs');
+	})
+}
 
 function countVotes(list) {
 	var votes = 0;
