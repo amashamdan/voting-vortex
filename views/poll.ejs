@@ -82,6 +82,15 @@
 		    data: data
 		});
 
+		$(".vote-form").on("submit", function(e) {
+			e.preventDefault();
+			/* from: http://stackoverflow.com/questions/1423777/how-can-i-check-whether-a-radio-button-is-selected-with-javascript */
+			if ($('input[name=option]:checked').length > 0) {
+				e.target.submit();
+			} else {
+				alert("Please select an option to vote for.");
+			}
+		});
 	</script>
 </body>
 </html>
