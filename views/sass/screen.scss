@@ -83,6 +83,42 @@ body {
 		color: $theme-color;
 	}
 }
+.layer {
+	width: 100%;
+	height: 100%;
+	background-color: black;
+	position: fixed;
+	left: 0;
+	top:0;
+	opacity: 0.85;
+	z-index: 1;
+	display: none;
+}
+.new-poll {
+	width: 100%;
+	padding: 0 10px 20px 10px;
+	background-color: white;
+	color: gray;
+	position: fixed;
+	left: 0;
+	top: 100px;
+	z-index: 2;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-content: flex-start;
+	display: none;
+}
+.new-poll-header {
+	width: 100%;
+	text-align: center;
+}
+#new-poll-form {
+	width: 350px;
+}
+.input-field {
+	width: 100%;
+}
 
 @media screen and (max-width: 650px) {
 	#wrapper, .vote-form {
