@@ -124,6 +124,11 @@ MongoClient.connect(mongoUrl, function(err, db) {
 		app.get('/login/facebook/return', passport.authenticate('facebook', { failureRedirect: '/' }), function(req, res) {
     			res.redirect('/');
   		});
+
+  		app.get('/logout', function(req, res){
+		    req.logout();
+		    res.redirect('/');
+		});
 });
 
 function renderPoll(res, polls, poll, ipaddress) {
