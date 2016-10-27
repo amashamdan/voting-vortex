@@ -31,13 +31,13 @@
 		<div class="layer"></div>
 		<div class="new-poll">
 			<p class="new-poll-header"> Add a new poll</p>
-			<form id="new-poll-form">
+			<form id="new-poll-form" method="post">
 				<p>Enter the poll's name:</p>
-				<input class="input-field" id="new-poll-name" placeholder="Enter the poll's name">
+				<input class="input-field" id="new-poll-name" placeholder="Enter the poll's name" type="text" name="name">
 				<p>Below you can add voting options:</p>
 				<div class="new-poll-options">
-					<input class="input-field" placeholder="Option">
-					<input class="input-field" placeholder="Option">
+					<input class="input-field" placeholder="Option" type="text" name="option">
+					<input class="input-field" placeholder="Option" type="text" name="option">
 				</div>
 				<button type="submit">Add Poll</button>
 				<button id="add-option">Add option</button>
