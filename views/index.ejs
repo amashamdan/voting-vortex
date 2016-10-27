@@ -10,10 +10,10 @@
 <body>
 	<div class="container">
 		<div class="menu">
-			<h2 class="banner">Voting Vortex</h2>
-			
+			<h2 class="banner">Voting Vortex</h2> 
 			<% if (user) { %>
-				<button class="button"><%= user.displayName %></button>
+				<h4>Welcome <%= user.displayName %></h4>
+				<a href="/logout"><button class="button">Logout</button></a>
 			<% } else { %>
 				<a href="/login/facebook"><button class="button">Sign in</button></a>
 			<% } %>
