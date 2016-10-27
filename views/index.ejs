@@ -13,6 +13,8 @@
 			<h2 class="banner">Voting Vortex</h2> 
 			<% if (user) { %>
 				<h4>Welcome <%= user.displayName %></h4>
+				<button id="new-poll-button" class="button">Add a poll</button>
+				<button class="button">My polls</button>
 				<a href="/logout"><button class="button">Logout</button></a>
 			<% } else { %>
 				<a href="/login/facebook"><button class="button">Sign in</button></a>
@@ -25,6 +27,24 @@
 		<div class="poll-list">
 			<p>Please wait while data are being loaded...</p>
 		</div>
+
+		<div class="layer"></div>
+		<div class="new-poll">
+			<p class="new-poll-header"> Add a new poll</p>
+			<form id="new-poll-form">
+				<p>Enter the poll's name:</p>
+				<input class="input-field" placeholder="Enter the poll's name">
+				<p>Below you can add voting options:</p>
+				<div class="new-poll-options">
+					<input class="input-field" placeholder="Option">
+					<input class="input-field" placeholder="Option">
+				</div>
+				<button id="new-form-cancel">Cancel</button>
+				<button id="add-option">Add option</button>
+				<button type="submit">Add Poll</button>
+			</form>
+		</div>
+
 		<hr/>
 		<div class="footer">
 			<div class="author">
@@ -51,6 +71,18 @@
 					$(".poll-item").slideDown();
 				}
 			});
+			$("#new-poll-button").click(function() {
+				$(".layer, .new-poll").fadeToggle();
+			})
+			$("#add-option").click(function(e) {
+				e.preventDefault();
+				$(".new-poll-options").append('<input class="input-field" placeholder="Option">');
+			});
+			$("#new-form-cancel").click(function(e) {
+				e.preventDefault();
+				document.getElementById("new-poll-form").reset();
+				$(".layer, .new-poll").fadeToggle();
+			})
 		})
 	</script>
 </body>
