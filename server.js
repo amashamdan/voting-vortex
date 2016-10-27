@@ -116,7 +116,6 @@ MongoClient.connect(mongoUrl, function(err, db) {
 			);
 		});
 
-
 		app.get('/login/facebook',
 			passport.authenticate('facebook'));
 		};
@@ -129,6 +128,24 @@ MongoClient.connect(mongoUrl, function(err, db) {
 		    req.logout();
 		    res.redirect('/');
 		});
+
+		app.post("/", function(req, res) {
+			var newPollName = req.body.name;
+			var newPollOptions = req.body.option;
+			var options = {};
+			for (var option in newPollOptions) {
+				options[newPollOptions[option]] = 0;
+			}
+			polls.insert(
+				{
+					"name": newPollName,
+					"options": options,
+					"voters": []
+				}
+			);
+			res.render("index.ejs", {user: req.user});
+			// maybe replace this by redirect to "/" or place the above line in callback for insert.
+		})
 });
 
 function renderPoll(res, polls, poll, ipaddress) {
@@ -162,4 +179,5 @@ app.listen(port);
 /* THINGs to do:
 - fix heeader and footer (style)
 - prevent multiple voting from same user.
-- reload only chart and no.of votes upon submission. */
+- add another athentication method.
+- optimize for phones. */
