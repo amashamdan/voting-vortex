@@ -141,10 +141,11 @@ MongoClient.connect(mongoUrl, function(err, db) {
 					"name": newPollName,
 					"options": options,
 					"voters": []
+				}, function() {
+					// To render after the update
+					res.render("index.ejs", {user: req.user});
 				}
 			);
-			res.render("index.ejs", {user: req.user});
-			// maybe replace this by redirect to "/" or place the above line in callback for insert.
 		})
 });
 
