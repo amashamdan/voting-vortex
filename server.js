@@ -140,6 +140,7 @@ MongoClient.connect(mongoUrl, function(err, db) {
 				{
 					"name": newPollName,
 					"options": options,
+					"creator": req.user.displayName,
 					"voters": []
 				}, function() {
 					// To render after the update
@@ -181,4 +182,5 @@ app.listen(port);
 - fix heeader and footer (style)
 - prevent multiple voting from same user.
 - add another athentication method.
+- delete option button in new poll form
 - optimize for phones. */
