@@ -16,24 +16,40 @@
 			<h2 class="banner">Voting Vortex</h2>
 			<div>
 				<a href="/"><button class="button">Home</button></a>
-				<button class="button">Sign in</button>
+				<% if (user) { %>
+					<button id="new-poll-button" class="button">Add a poll</button>
+					<a href="/mypolls"><button id="my-polls" class="button">My polls</button></a>
+					<a href="/logout"><button class="button">Logout</button></a>
+				<% } else { %>
+					<button class="button">Sign in</button>
+				<% } %>
 			</div>
 		</div>
 		
 		<h3><%=name%></h3>
 		<h4>Number of votes: <%=votes%></h4>
+		<p>If you haven't done so yet, please cast your vote!</p>
 		<div id="chart">
-		
-			<form class="vote-form" method="post">
-				<p>If you haven't done so yet, please cast your vote!</p>
-				<% for (var item in list) { %>
-					<!-- stringify is important, without it, anything after space is ignored. 
-					It is necessary for all inputs to be set to the same name, this will allow the user to select only one option. The value is needed at the server end coz it defines the selected input. -->
-					<input type="radio" name="option" value=<%- JSON.stringify(item) %>><%= item %><br/>
-				<%	}; %>
-				<input class="vote-button" type="submit" value="Send to the vortex">
-			</form>
+			
+			<div class="vote-form-div">
+				<form class="vote-form" method="post">
+					<% for (var item in list) { %>
+						<!-- stringify is important, without it, anything after space is ignored. 
+						It is necessary for all inputs to be set to the same name, this will allow the user to select only one option. The value is needed at the server end coz it defines the selected input. -->
+						<input type="radio" name="option" value=<%- JSON.stringify(item) %>><%= item %><br/>
+					<%	}; %>
 
+					<input class="vote-button" type="submit" value="Send to the vortex">
+				</form>
+				
+				<% if (user) { %>
+					<p>If you are hard to please and don't like any option, enter your own below and click "Add option".</p>
+					<form id="add-option" class="option-form">
+						<input id="new-option" placeholder="Type option" type="text">
+						<button type="submit" id="add-option-button">Add option</button>
+					</form>
+				<% } %>
+			</div>
 			<div id="wrapper">
 				<canvas id="myChart" width="1" height="1"></canvas>
 			</div>
@@ -84,7 +100,14 @@
 		    type: 'doughnut',
 		    data: data
 		});
-
+		$("#add-option").on("submit", function(e) {
+			e.preventDefault();
+			if ($("#new-option").val() == "" || $("#new-option").val() == " ") {
+				alert("Please enter a valid option.");
+			} else {
+				$(".vote-form").prepend("<input type='radio' name='option' value='" + $("#new-option").val() + "'>"+$("#new-option").val()+"<br/>")
+			}
+		});
 		$(".vote-form").on("submit", function(e) {
 			e.preventDefault();
 			/* from: http://stackoverflow.com/questions/1423777/how-can-i-check-whether-a-radio-button-is-selected-with-javascript */
