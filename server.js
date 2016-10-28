@@ -98,7 +98,7 @@ MongoClient.connect(mongoUrl, function(err, db) {
 		app.get("/polls/:poll", function(req, res) {
 			console.log(req.connection.remoteAddress);
 			var ipaddress = req.headers['x-forwarded-for'] || req.connection.remoteAddress || req.socket.remoteAddress || req.connection.socket.remoteAddress;
-			renderPoll(res, polls, req.params.poll, ipaddress);
+			renderPoll(res, polls, req.params.poll, ipaddress, req.user);
 		});
 
 		app.post("/polls/:poll", parser, function(req, res) {
@@ -160,7 +160,7 @@ MongoClient.connect(mongoUrl, function(err, db) {
 		});
 });
 
-function renderPoll(res, polls, poll, ipaddress) {
+function renderPoll(res, polls, poll, ipaddress, user) {
 	polls.find({"_id": ObjectId(poll)}).toArray(function(err, result) {
 		var name = result[0].name;
 		var list = result[0].options;
@@ -171,7 +171,7 @@ function renderPoll(res, polls, poll, ipaddress) {
 			voters = [];
 		}
 		var votes = countVotes(list);
-		res.locals = {name: name, poll: poll, votes: votes, list: list, ipaddress: ipaddress, voters: voters};
+		res.locals = {name: name, poll: poll, votes: votes, list: list, ipaddress: ipaddress, voters: voters, user: user};
 		res.render('poll.ejs');
 	})
 }
