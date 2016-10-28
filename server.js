@@ -147,7 +147,17 @@ MongoClient.connect(mongoUrl, function(err, db) {
 					res.render("index.ejs", {user: req.user});
 				}
 			);
-		})
+		});
+
+		app.get("/mypolls", function(req, res) {
+			polls.find({"creator": req.user.displayName}).toArray(function(err, result) {
+				var votes = [];
+				for (var poll in result) {
+					votes.push(countVotes(result[poll].options));
+				}
+				res.render("mypolls.ejs", {user: req.user, polls: result, votes: votes});
+			});
+		});
 });
 
 function renderPoll(res, polls, poll, ipaddress) {
