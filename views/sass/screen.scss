@@ -34,8 +34,7 @@ body {
 	color: $theme-color;
 	text-align: center;
 }
-.poll-item {
-	display: none;
+.poll-item, .mypoll-item {
 	text-align: left;
 	list-style: none;
 	border: 1px solid $theme-color;
@@ -49,6 +48,9 @@ body {
 		color: $theme-color;
 		text-decoration: none;
 	}
+}
+.poll-item {
+	display: none;
 }
 #chart {
 	display: flex;
