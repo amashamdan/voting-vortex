@@ -58,7 +58,7 @@ body {
 	justify-content: space-between;
 	align-items: center;
 }
-#wrapper, .vote-form {
+#wrapper, .vote-form-div {
 	width: 50%;
 	max-width: 500px;
 }
@@ -73,7 +73,7 @@ body {
 	color: white;
 	background-color: $theme-color;
 	border: none;
-	margin: 15px 5px 20px 5px !important;
+	margin: 15px 5px 5px 5px !important;
 	&:hover {
 		cursor: pointer;
 	}
@@ -121,9 +121,12 @@ body {
 .input-field {
 	width: 100%;
 }
+.option-form {
+	margin-bottom: 20px;
+}
 
 @media screen and (max-width: 650px) {
-	#wrapper, .vote-form {
+	#wrapper, .vote-form-div {
 		width: 100%;
 	}
 }
