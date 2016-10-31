@@ -13,8 +13,8 @@
 			<h2 class="banner">Voting Vortex</h2> 
 			<% if (user) { %>
 				<h4>Welcome <%= user.displayName %></h4>
+				<a href="/"><button class="button">Home</button></a>
 				<button id="new-poll-button" class="button">Add a poll</button>
-				<a href="/mypolls"><button id="my-polls" class="button">My polls</button></a>
 				<a href="/logout"><button class="button">Logout</button></a>
 			<% } else { %>
 				<a href="/login/facebook"><button class="button">Sign in</button></a>
@@ -39,7 +39,7 @@
 		<div class="layer"></div>
 		<div class="new-poll">
 			<p class="new-poll-header"> Add a new poll</p>
-			<form id="new-poll-form" method="post">
+			<form id="new-poll-form" method="post" action="/">
 				<p>Enter the poll's name:</p>
 				<input class="input-field" id="new-poll-name" placeholder="Enter the poll's name" type="text" name="name">
 				<p>Below you can add voting options:</p>
