@@ -121,12 +121,18 @@ MongoClient.connect(mongoUrl, function(err, db) {
 		};
 
 		app.get('/login/facebook/return', passport.authenticate('facebook', { failureRedirect: '/' }), function(req, res) {
-    			res.redirect('/');
+    			/* redirects the user to the last page where the request originated from. */
+    			res.redirect(req.header('Referer'));
   		});
 
   		app.get('/logout', function(req, res){
 		    req.logout();
-		    res.redirect('/');
+		    /* redirects the user to the last page where the request originated from. */
+		    if (req.header('Referer') == "http://localhost:8085/mypolls") {
+			    res.redirect("/");
+		    } else {
+		    	res.redirect(req.header('Referer'));
+		    }
 		});
 
 		app.post("/", function(req, res) {
