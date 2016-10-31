@@ -29,7 +29,7 @@
 				</div>
 				<% for (var poll in polls) { %>
 					<% var link = "/polls/" + polls[poll]._id %>
-					<li class="mypoll-item" id=<%= polls[poll].name %>><a href=<%= link %>><%= polls[poll].name %> <span>(<%= votes[poll] %> voted!)</span></a></li>
+					<li class="mypoll-item" id=<%= polls[poll].name %>><a href=<%= link %>><%= polls[poll].name %> <span>(<%= votes[poll] %> voted!)</span></a><button class="delete-button" id=<%= polls[poll].name %>>Delete poll</button></li>
 				<% } %>
 			<% } else { %>
 				<h4>You haven't created any polls yet. Click add a poll to add a new one.</h4>
@@ -95,6 +95,16 @@
 					alert("Please make sure all field are filled.");
 				}
 			});
+			$(".delete-button").click(function() {
+				if (confirm("Are you sure you want to delete the poll '" + $(this).attr("id") + "'")) {
+					$.ajax({
+						type: "DELETE",
+						url: "/delete/" + $(this).attr("id")
+					}).done(function() {
+						location.reload();
+					});
+				}
+			})
 		})
 	</script>
 </body>
