@@ -1,4 +1,5 @@
 $theme-color: #297854;
+$delete-color: #ED5E68;
 
 body {
 	font-family: 'Raleway', sans-serif;
@@ -122,7 +123,17 @@ body {
 	width: 100%;
 }
 .option-form {
-	margin-bottom: 20px;
+	margin-bottom0: 20px;
+}
+.delete-button {
+	background-color: $delete-color;
+	color: white;
+	border: none;
+	border-radius: 2px;
+	padding: 4px 8px 4px 8px;
+	&:hover {
+		cursor: pointer;
+	}
 }
 
 @media screen and (max-width: 650px) {
