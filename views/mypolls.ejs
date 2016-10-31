@@ -21,13 +21,18 @@
 			<% } %>
 
 		</div>
-		<div class="information">
-			<h4>Here is a list of the polls you created.</h4>
-		</div>
+		
 		<div class="poll-list">
-			<% for (var poll in polls) { %>
-				<% var link = "/polls/" + polls[poll]._id %>
-				<li class="mypoll-item" id=<%= polls[poll].name %>><a href=<%= link %>><%= polls[poll].name %> <span>(<%= votes[poll] %> voted!)</span></a></li>
+			<% if (polls.length != 0) { %>
+				<div class="information">
+					<h4>Here is a list of the polls you created.</h4>
+				</div>
+				<% for (var poll in polls) { %>
+					<% var link = "/polls/" + polls[poll]._id %>
+					<li class="mypoll-item" id=<%= polls[poll].name %>><a href=<%= link %>><%= polls[poll].name %> <span>(<%= votes[poll] %> voted!)</span></a></li>
+				<% } %>
+			<% } else { %>
+				<h4>You haven't created any polls yet. Click add a poll to add a new one.</h4>
 			<% } %>
 		</div>
 
