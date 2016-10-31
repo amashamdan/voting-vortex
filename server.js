@@ -164,6 +164,11 @@ MongoClient.connect(mongoUrl, function(err, db) {
 				res.render("mypolls.ejs", {user: req.user, polls: result, votes: votes});
 			});
 		});
+
+		app.delete("/delete/:name", function(req, res) {
+			polls.remove({"name": req.params.name});
+			res.sendStatus(200);
+		});
 });
 
 function renderPoll(res, polls, poll, ipaddress, user) {
@@ -200,7 +205,4 @@ app.listen(port);
 - add another athentication method.
 - delete option button in new poll form
 - optimize for phones. 
-- Make sure home button is everywhere
-- fix new form overflow
-- CHECK EVERYHTING WORKS WHEN NOT SIGNED IN.
-- AFTER VOTING, LOGS OUT???*/
+- fix new form overflow */
