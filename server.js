@@ -111,7 +111,7 @@ MongoClient.connect(mongoUrl, function(err, db) {
 				{"_id": ObjectId(req.params.poll)},
 				{"$inc": {[optionPath]: 1}, "$push": {"voters": ipaddress}},
 				function() {
-					renderPoll(res, polls, req.params.poll, ipaddress);
+					renderPoll(res, polls, req.params.poll, ipaddress, req.user);
 				}
 			);
 		});
@@ -193,4 +193,8 @@ app.listen(port);
 - prevent multiple voting from same user.
 - add another athentication method.
 - delete option button in new poll form
-- optimize for phones. */
+- optimize for phones. 
+- Make sure home button is everywhere
+- fix new form overflow
+- CHECK EVERYHTING WORKS WHEN NOT SIGNED IN.
+- AFTER VOTING, LOGS OUT???*/
