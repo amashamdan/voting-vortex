@@ -11,6 +11,26 @@
 	
 </head>
 <body>
+	<!-- Facebook JavaScript SDK, used to enable share functionality. According to the quick setup guide it should be at the top of the body. It loads the sdk asynchronously. --> 
+	<script>
+	  window.fbAsyncInit = function() {
+	    FB.init({
+	      appId      : '1305105596208709',
+	      xfbml      : true,
+	      version    : 'v2.8'
+	    });
+	    FB.AppEvents.logPageView();
+	  };
+
+	  (function(d, s, id){
+	     var js, fjs = d.getElementsByTagName(s)[0];
+	     if (d.getElementById(id)) {return;}
+	     js = d.createElement(s); js.id = id;
+	     js.src = "//connect.facebook.net/en_US/sdk.js";
+	     fjs.parentNode.insertBefore(js, fjs);
+	   }(document, 'script', 'facebook-jssdk'));
+	</script>
+
 	<div class="container">
 		<div class="menu">
 			<h2 class="banner">Voting Vortex</h2>
@@ -28,6 +48,7 @@
 		
 		<h3><%=name%></h3>
 		<h4>Number of votes: <%=votes%></h4>
+		<button id="share">Share this poll</button>
 		<p>If you haven't done so yet, please cast your vote!</p>
 		<div id="chart">
 			
@@ -182,7 +203,15 @@
 					window.location.replace("/");
 				});
 			}
-		})
+		});
+		var link = window.location.href;
+		document.getElementById('share').onclick = function() {
+			FB.ui({
+		    	method: 'share',
+		    	display: 'popup',
+		    	href: link
+			}, function(response){});
+		}
 	</script>
 </body>
 </html>
