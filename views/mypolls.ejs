@@ -13,11 +13,15 @@
 			<h2 class="banner">Voting Vortex</h2> 
 			<% if (user) { %>
 				<h4>Welcome <%= user.displayName %></h4>
-				<a href="/"><button class="button">Home</button></a>
-				<button id="new-poll-button" class="button">Add a poll</button>
-				<a href="/logout"><button class="button">Logout</button></a>
+				<div class="menu-buttons">
+					<a href="/"><button class="button">Home</button></a>
+					<button id="new-poll-button" class="button">Add a poll</button>
+					<a href="/logout"><button class="button">Logout</button></a>
+				</div>
 			<% } else { %>
-				<a href="/login/facebook"><button class="sign-in">Facebook Sign in</button></a>
+				<div class="menu-buttons">
+					<a href="/login/facebook"><button class="sign-in">Facebook Sign in</button></a>
+				</div>
 			<% } %>
 
 		</div>

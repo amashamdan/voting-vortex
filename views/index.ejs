@@ -12,12 +12,16 @@
 		<div class="menu">
 			<h2 class="banner">Voting Vortex</h2> 
 			<% if (user) { %>
-				<h4>Welcome <%= user.displayName %></h4>
-				<button id="new-poll-button" class="button">Add a poll</button>
-				<a href="/mypolls"><button id="my-polls" class="button">My polls</button></a>
-				<a href="/logout"><button class="button">Logout</button></a>
+				<h4 class="greeting">Welcome <%= user.displayName %></h4>
+				<div class="menu-buttons">
+					<button id="new-poll-button" class="button">Add a poll</button>
+					<a href="/mypolls"><button id="my-polls" class="button">My polls</button></a>
+					<a href="/logout"><button class="button">Logout</button></a>
+				</div>
 			<% } else { %>
-				<a href="/login/facebook"><button class="sign-in">Facebook Sign in</button></a>
+				<div class="menu-buttons">
+					<a href="/login/facebook"><button class="sign-in">Facebook Sign in</button></a>
+				</div>
 			<% } %>
 
 		</div>
