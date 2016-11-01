@@ -157,8 +157,9 @@ MongoClient.connect(mongoUrl, function(err, db) {
 					"creator": req.user.displayName,
 					"voters": []
 				}, function() {
-					// To render after the update
-					res.render("index.ejs", {user: req.user});
+					//res.render("index.ejs", {user: req.user});
+					/* The above line works but generates an error when the user tries to refresh the page. Upon refresh the poll added will keep dubplicating because the form will keep resubmitting itself. redirecting the page instead goes to a completely different page and refreshing the page doesn't resubmit the form but only reloads the home page. */
+					res.redirect("/");
 				}
 			);
 		});
@@ -208,11 +209,3 @@ function countVotes(list) {
 // port 3000 used for localhost during development.
 var port = Number(process.env.PORT || 8085)
 app.listen(port);
-
-/* THINGs to do:
-- fix heeader and footer (style)
-- prevent multiple voting from same user.
-- add another athentication method.
-- delete option button in new poll form
-- optimize for phones. 
-- fix new form overflow */
