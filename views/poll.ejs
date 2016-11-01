@@ -188,15 +188,20 @@
 		$("#new-poll-form").on("submit", function(e) {
 			e.preventDefault();
 			var allFilled = true;
+			var numberOfOptions = 0;
 			$(".input-field").each(function(i) {
+				numberOfOptions++;
 				if ($(this).val() == "" || $(this).val() == " ") {
 					allFilled = false;
 				}
 			});
-			if (allFilled) {
-				e.target.submit();
-			} else {
+
+			if (!allFilled) {
 				alert("Please make sure all field are filled.");
+			} else if (numberOfOptions < 3) {
+				alert("Please enter two options at least... It's not a poll with less than two options :)");
+			} else {
+				e.target.submit();
 			}
 		});
 		$(".delete-button-inPollPage").click(function() {
