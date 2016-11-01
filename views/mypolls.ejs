@@ -47,8 +47,9 @@
 					<input class="input-field" placeholder="Option" type="text" name="option">
 					<input class="input-field" placeholder="Option" type="text" name="option">
 				</div>
-				<button type="submit">Add Poll</button>
-				<button id="add-option">Add option</button>
+				<button id="add-option" class="option-button">Add option</button>
+				<button id="remove-option" class="option-button">Remove option</button>
+				<button id="new-poll-submit" type="submit">Add Poll</button>
 				<button id="new-form-cancel">Cancel</button>
 			</form>
 		</div>
@@ -81,18 +82,28 @@
 				document.getElementById("new-poll-form").reset();
 				$(".layer, .new-poll").fadeToggle();
 			});
+			$("#remove-option").click(function(e) {
+				e.preventDefault();
+				console.log($(".new-poll-options:last-child").val())
+				$(".new-poll-options").children().last().remove();
+			});
 			$("#new-poll-form").on("submit", function(e) {
 				e.preventDefault();
 				var allFilled = true;
+				var numberOfOptions = 0;
 				$(".input-field").each(function(i) {
+					numberOfOptions++;
 					if ($(this).val() == "" || $(this).val() == " ") {
 						allFilled = false;
 					}
 				});
-				if (allFilled) {
-					e.target.submit();
-				} else {
+
+				if (!allFilled) {
 					alert("Please make sure all field are filled.");
+				} else if (numberOfOptions < 3) {
+					alert("Please enter two options at least... It's not a poll with less than two options :)");
+				} else {
+					e.target.submit();
 				}
 			});
 			$(".delete-button").click(function() {
