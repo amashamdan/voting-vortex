@@ -3,6 +3,9 @@ $delete-color: #ED5E68;
 
 body {
 	font-family: 'Raleway', sans-serif;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0 10px 0 10px;
 }
 .container {
 	width: 100%;
@@ -42,6 +45,9 @@ body {
 	padding: 5px;
 	margin: 5px 0 0 0;
 	border-radius: 5px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
 	span {
 		font-size: 0.8em;
 	}
@@ -80,10 +86,19 @@ body {
 	}
 }
 .footer {
-	color: $theme-color;
+	padding: 2px 10px 2px 10px;
+	background-color: $theme-color;
+	color: white;
+	margin: 0;
 	font-size: 0.75em;
 	a {
-		color: $theme-color;
+		color: white;
+	}
+	ul {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-around;
+		margin-top: -3px;
 	}
 }
 .layer {
@@ -100,16 +115,11 @@ body {
 .new-poll {
 	width: 100%;
 	padding: 0 10px 20px 10px;
-	background-color: white;
-	color: gray;
+	color: white;
 	position: fixed;
 	left: 0;
-	top: 100px;
+	top: 0;
 	z-index: 2;
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
-	align-content: flex-start;
 	display: none;
 }
 .new-poll-header {
@@ -117,13 +127,16 @@ body {
 	text-align: center;
 }
 #new-poll-form {
-	width: 350px;
+	max-width: 315px;
+	width: 100%;
+	position: relative;
+	left: calc((100% - 315px) / 2);
 }
 .input-field {
 	width: 100%;
 }
 .option-form {
-	margin-bottom0: 20px;
+	margin-bottom: 20px;
 }
 .delete-button {
 	background-color: $delete-color;
@@ -144,6 +157,38 @@ body {
 	border-radius: 2px;
 	padding: 5px;
 	margin: 15px 0 15px 0;
+	&:hover {
+		cursor: pointer;
+	}
+}
+#new-poll-submit, #new-form-cancel {
+	width: 100%;
+	color: white;
+	border: none;
+	padding: 6px;
+	margin-top: 10px;
+	border-radius: 3px;
+	&:hover {
+		cursor: pointer;
+	}
+}
+#new-poll-submit {
+	background-color: $theme-color;
+}
+#new-form-cancel {
+	background-color: $delete-color;
+}
+.option-button {
+	padding: 4px;
+	width: 40%;
+	margin: 10px 4% 0 4%; 
+}
+.sign-in {
+	color: white;
+	background-color: #3B5998;
+	border: 1px solid white;
+	padding: 5px;
+	width: 115px;
 	&:hover {
 		cursor: pointer;
 	}
