@@ -67,8 +67,6 @@ app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveU
 app.use(passport.initialize());
 app.use(passport.session());
 
-
-
 MongoClient.connect(mongoUrl, function(err, db) {
 	if (err) {
 		res.send("Error connecting to database: " + err);
@@ -78,7 +76,7 @@ MongoClient.connect(mongoUrl, function(err, db) {
 
 		app.get("/", function(req, res) {
 			res.render("index.ejs", {user: req.user});
-		})
+		});
 
 		app.get("/home", function(req, res) {
 			polls.find({}).toArray(function(err, result) {
@@ -116,13 +114,17 @@ MongoClient.connect(mongoUrl, function(err, db) {
 			);
 		});
 
-		app.get('/login/facebook',
-			passport.authenticate('facebook'));
-		};
+		var lastPage = "/";
+		function please(req, res, next) {
+			lastPage = req.header('Referer');
+			next();
+		}
+
+		app.get('/login/facebook', please, passport.authenticate('facebook'));
 
 		app.get('/login/facebook/return', passport.authenticate('facebook', { failureRedirect: '/' }), function(req, res) {
     			/* redirects the user to the last page where the request originated from. */
-    			res.redirect(req.header('Referer'));
+    			res.redirect(lastPage);
   		});
 
   		app.get('/logout', function(req, res){
@@ -169,6 +171,7 @@ MongoClient.connect(mongoUrl, function(err, db) {
 			polls.remove({"name": req.params.name});
 			res.sendStatus(200);
 		});
+	}
 });
 
 function renderPoll(res, polls, poll, ipaddress, user) {
