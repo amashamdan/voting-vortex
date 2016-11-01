@@ -176,8 +176,23 @@ body {
   cursor: pointer;
 }
 
+/* line 139, ../sass/screen.scss */
+.delete-button-inPollPage {
+  width: 100%;
+  background-color: #ED5E68;
+  border: none;
+  color: white;
+  border-radius: 2px;
+  padding: 5px;
+  margin: 15px 0 15px 0;
+}
+/* line 147, ../sass/screen.scss */
+.delete-button-inPollPage:hover {
+  cursor: pointer;
+}
+
 @media screen and (max-width: 650px) {
-  /* line 140, ../sass/screen.scss */
+  /* line 153, ../sass/screen.scss */
   #wrapper, .vote-form-div {
     width: 100%;
   }

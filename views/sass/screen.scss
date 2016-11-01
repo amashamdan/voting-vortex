@@ -136,6 +136,19 @@ body {
 	}
 }
 
+.delete-button-inPollPage {
+	width: 100%;
+	background-color: $delete-color;
+	border: none;
+	color: white;
+	border-radius: 2px;
+	padding: 5px;
+	margin: 15px 0 15px 0;
+	&:hover {
+		cursor: pointer;
+	}
+}
+
 @media screen and (max-width: 650px) {
 	#wrapper, .vote-form-div {
 		width: 100%;
