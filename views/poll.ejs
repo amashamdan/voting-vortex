@@ -72,6 +72,9 @@
 			</form>
 		</div>
 
+		<% if (user && user.displayName == creator) { %>
+			<button class="delete-button-inPollPage">Delete</button>
+		<% } %>
 
 		<hr/>
 		<div class="footer">
@@ -169,6 +172,17 @@
 				alert("Please make sure all field are filled.");
 			}
 		});
+		$(".delete-button-inPollPage").click(function() {
+			if (confirm("Are you sure you want to delete the poll '" + name + "'")) {
+				$.ajax({
+					type: "DELETE",
+					url: "/delete/" + name
+				}).done(function() {
+					//The following is better than using window.location.href ="/", because replace() does not keep the originating page in the session history, meaning the user won't get stuck in a never-ending back-button fiasco. 
+					window.location.replace("/");
+				});
+			}
+		})
 	</script>
 </body>
 </html>
