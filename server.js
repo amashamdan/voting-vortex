@@ -114,13 +114,19 @@ MongoClient.connect(mongoUrl, function(err, db) {
 			);
 		});
 
+		/* In '/login/facebook/return' route, the user was redirected to req.header('Referer').
+		If the user was logged in on the computer with facebook, the user will be redirected to the last page on vortex without issues.
+		If the user wasn't logged in on the computer with FB, the code will redirect the user to facebook instead because it became the referer.
+		To fix it, a function callback (savePage) acting as middleware is added to the get request of '/login/facebook' before passport.authenticate('facebook') is called.
+		In this function, the referer is stored. Which means the vortex page will be saved even if the user is redirected to facebook login page, because referer is saved before that." */
+
 		var lastPage = "/";
-		function please(req, res, next) {
+		function savePage(req, res, next) {
 			lastPage = req.header('Referer');
 			next();
 		}
 
-		app.get('/login/facebook', please, passport.authenticate('facebook'));
+		app.get('/login/facebook', savePage, passport.authenticate('facebook'));
 
 		app.get('/login/facebook/return', passport.authenticate('facebook', { failureRedirect: '/' }), function(req, res) {
     			/* redirects the user to the last page where the request originated from. */
