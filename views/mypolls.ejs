@@ -11,7 +11,8 @@
 <body>
 	<div class="container">
 		<div class="menu">
-			<h2 class="banner">Voting Vortex</h2> 
+			<h2 class="banner">Voting Vortex</h2>
+			<!-- If a user is found (if a user is logged in), three buttons are added. -->
 			<% if (user) { %>
 				<h4>Welcome <%= user.displayName %></h4>
 				<div class="menu-buttons">
@@ -28,19 +29,21 @@
 		</div>
 		
 		<div class="poll-list">
+			<!-- If the user had created polls, they are rendered. Else a message indicated the user hasn't added any polls. -->
 			<% if (polls.length != 0) { %>
 				<div class="information">
 					<h4>Here is a list of the polls you created.</h4>
 				</div>
 				<% for (var poll in polls) { %>
 					<% var link = "/polls/" + polls[poll]._id %>
+					<!-- Each li element represents a poll, each's attributes are created from info received from server. -->
 					<li class="mypoll-item" id=<%= polls[poll].name %>><a href=<%= link %>><%= polls[poll].name %> <span>(<%= votes[poll] %> voted!)</span></a><button class="delete-button" id=<%= polls[poll].name %>>Delete poll</button></li>
 				<% } %>
 			<% } else { %>
 				<h4>You haven't created any polls yet. Click add a poll to add a new one.</h4>
 			<% } %>
 		</div>
-
+		<!-- The follwing layer div gives transparent black background to the new poll form. -->
 		<div class="layer"></div>
 		<div class="new-poll">
 			<p class="new-poll-header"> Add a new poll</p>
@@ -58,8 +61,8 @@
 				<button id="new-form-cancel">Cancel</button>
 			</form>
 		</div>
-
 		<hr/>
+		<!-- Footer section -->
 		<div class="footer">
 			<div class="author">
 				<p>Page by Amer Hamdan (email:<a href="mailto:amashamdan@gmail.com"> amashamdan@gmail.com</a>)</p>
@@ -70,6 +73,7 @@
 					<li><a href="http://codepen.io/amashamdan/" target="blank">CodePen</a></li>
 					<li><a href="https://www.linkedin.com/in/amerhamdan" target="blank">Linkedin</a></li>
 				</ul>
+				<span style="font-size:0.7em">Copyright © Voting-Vortex 2016. All Rights Reserved</span>
 			</div>
 		</div>
 	</div>

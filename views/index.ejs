@@ -11,7 +11,8 @@
 <body>
 	<div class="container">
 		<div class="menu">
-			<h2 class="banner">Voting Vortex</h2> 
+			<h2 class="banner">Voting Vortex</h2>
+			<!-- If a user is found (if a user is logged in), three buttons are added. -->
 			<% if (user) { %>
 				<h4 class="greeting">Welcome <%= user.displayName %></h4>
 				<div class="menu-buttons">
@@ -24,7 +25,6 @@
 					<a href="/login/facebook"><button class="sign-in">Facebook Sign in</button></a>
 				</div>
 			<% } %>
-
 		</div>
 		<div class="information">
 			<h4>Select a poll from below to view and vote!</h4>
@@ -32,7 +32,7 @@
 		<div class="poll-list">
 			<p>Please wait while data are being loaded...</p>
 		</div>
-
+		<!-- The follwing layer div gives transparent black background to the new poll form. -->
 		<div class="layer"></div>
 		<div class="new-poll">
 			<p class="new-poll-header"> Add a new poll</p>
@@ -50,8 +50,8 @@
 				<button id="new-form-cancel">Cancel</button>
 			</form>
 		</div>
-
 		<hr/>
+		<!-- Footer section. -->
 		<div class="footer">
 			<div class="author">
 				<p>Page by Amer Hamdan (email:<a href="mailto:amashamdan@gmail.com"> amashamdan@gmail.com</a>)</p>
@@ -62,6 +62,7 @@
 					<li><a href="http://codepen.io/amashamdan/" target="blank">CodePen</a></li>
 					<li><a href="https://www.linkedin.com/in/amerhamdan" target="blank">Linkedin</a></li>
 				</ul>
+				<span style="font-size:0.7em">Copyright © Voting-Vortex 2016. All Rights Reserved</span>
 			</div>
 		</div>
 	</div>

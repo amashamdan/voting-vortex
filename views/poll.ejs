@@ -7,6 +7,7 @@
 	<!-- The '/' is necessary before the path in href, without it the file won't be found. -->
 	<link rel="stylesheet" href="/stylesheets/screen.css"/>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<!-- chart.js is loaded to draw the chart. -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.bundle.min.js"></script>
 	<script src="/scripts/newPollHandlers.js"></script>
 </head>
@@ -36,6 +37,7 @@
 			<h2 class="banner">Voting Vortex</h2>
 			<div class="menu-buttons">
 				<a href="/"><button class="button">Home</button></a>
+				<!-- If a user is found (if a user is logged in), three buttons are added. -->
 				<% if (user) { %>
 					<button id="new-poll-button" class="button">Add a poll</button>
 					<a href="/mypolls"><button id="my-polls" class="button">My polls</button></a>
@@ -45,7 +47,7 @@
 				<% } %>
 			</div>
 		</div>
-		
+		<!-- These information received from server. -->
 		<h3><%=name%></h3>
 		<h4>Number of votes: <%=votes%></h4>
 		<button id="share">Share this poll</button>
@@ -54,15 +56,15 @@
 			
 			<div class="vote-form-div">
 				<form class="vote-form" method="post">
+					<!-- The loop adds the voting options. -->
 					<% for (var item in list) { %>
 						<!-- stringify is important, without it, anything after space is ignored. 
 						It is necessary for all inputs to be set to the same name, this will allow the user to select only one option. The value is needed at the server end coz it defines the selected input. -->
 						<input type="radio" name="option" value=<%- JSON.stringify(item) %>><%= item %><br/>
 					<%	}; %>
-
 					<input class="vote-button" type="submit" value="Send to the vortex">
 				</form>
-				
+				<!-- If the user is logged in, an option is given to add voting option. -->
 				<% if (user) { %>
 					<p>If you are hard to please and don't like any option, enter your own below and click "Add option".</p>
 					<form id="add-option-form" class="option-form">
@@ -71,11 +73,12 @@
 					</form>
 				<% } %>
 			</div>
+			<!-- Chart is enclosed in a wrapper div to help with styling. -->
 			<div id="wrapper">
 				<canvas id="myChart" width="1" height="1"></canvas>
 			</div>
 		</div>
-		
+		<!-- The follwing layer div gives transparent black background to the new poll form. -->
 		<div class="layer"></div>
 		<div class="new-poll">
 			<p class="new-poll-header"> Add a new poll</p>
@@ -93,12 +96,12 @@
 				<button id="new-form-cancel">Cancel</button>
 			</form>
 		</div>
-
+		<!-- If the user is logged in and they created the current poll, an button to delete the poll is added. -->
 		<% if (user && user.displayName == creator) { %>
 			<button class="delete-button-inPollPage">Delete</button>
 		<% } %>
-
 		<hr/>
+		<!-- Footer section. -->
 		<div class="footer">
 			<div class="author">
 				<p>Page by Amer Hamdan (email:<a href="mailto:amashamdan@gmail.com"> amashamdan@gmail.com</a>)</p>
@@ -109,77 +112,105 @@
 					<li><a href="http://codepen.io/amashamdan/" target="blank">CodePen</a></li>
 					<li><a href="https://www.linkedin.com/in/amerhamdan" target="blank">Linkedin</a></li>
 				</ul>
+				<span style="font-size:0.7em">Copyright © Voting-Vortex 2016. All Rights Reserved</span>
 			</div>
 		</div>
 	</div>
 	<script>
+		/* The poll's information are stringified to be handled properly. */
 		var name = <%- JSON.stringify(name) %>;
 		var list = <%- JSON.stringify(list) %>;
 		var poll = <%- JSON.stringify(poll) %>;
 		var votes = <%- JSON.stringify(votes) %>;
 		var ipaddress = <%- JSON.stringify(ipaddress) %>;
 		var voters = <%- JSON.stringify(voters) %>;
-		
+		/* This is the set of colors to be used for the doughnut chart. */
 		var colors = ["#8dd3c7", "#ffffb3", "#bebada", "#fb8072", "#80b1d3", "#fdb462", "#b3de69", "#fccde5", "#d9d9d9", "#bc80bd", "#ccebc5", "#ffed6f"];
+		/* data object which is used by chart.js to draw the chart. */
 		var data = {};
+		/* entries required by chart.js. */
+		/* These are labels to be associated with the legend. */
 		data.labels = [];
+		/* Holds data and colors. */
 		data.datasets = [{}];
+		/* This will hold the number of votes for each option. */
 		data.datasets[0].data = [];
+		/* Hold background color for each option. */
 		data.datasets[0].backgroundColor = [];
+		/* Counter is used to assign a color to each option. */
 		var colorCounter = 0;
+		/* The loop saves the number of votes and background color for each option in dataset.  */
 		for (var entry in list) {
 			data.labels.push(entry);
 			data.datasets[0].data.push(list[entry]);
 			data.datasets[0].backgroundColor.push(colors[colorCounter]);
+			/* The colorCounter is either incremented or reset if the last color is reached. */
 			if ((colorCounter+1) < colors.length) {
 				colorCounter++;
 			} else {
 				colorCounter = 0;
 			}
 		}
-
+		/* Creating the chart. It will be appended to myChart element. */
 		var ctx = document.getElementById("myChart");
 		var myChart = new Chart(ctx, {
 		    type: 'doughnut',
 		    data: data
 		});
+		/* Handler for the form which adds an option to the existing poll (if the user is logged in). */
 		$("#add-option-form").on("submit", function(e) {
 			e.preventDefault();
+			/* Checks that a valid option if entered. */
 			if ($("#new-option").val() == "" || $("#new-option").val() == " ") {
+				/* If not, a message is alerted to enter a valid option. */
 				alert("Please enter a valid option.");
 			} else {
+				/* If valid, Option is added at the top of the list. */
 				$(".vote-form").prepend("<input type='radio' name='option' value='" + $("#new-option").val() + "'>"+$("#new-option").val()+"<br/>")
 			}
 		});
+		/* When the the user selects an option and votes for it. */
 		$(".vote-form").on("submit", function(e) {
+			/* Submission is paused. */
 			e.preventDefault();
-			/* from: http://stackoverflow.com/questions/1423777/how-can-i-check-whether-a-radio-button-is-selected-with-javascript */
+			/* The variable is used to check whether the user voted before or not. False means didn't vote before. */
 			var votedBefore = false;
 			for (var voter in voters) {
+				/* Compares ipaddress with the list of ip addresses received from server which were retrieved from database. */
 				if (ipaddress == voters[voter]) {
 					votedBefore = true;
 				}
 			}
+			/* If the user voted before, they are not allowed to vote again. */
 			if (votedBefore) {
 				alert("Sorry voter, you have already voted. Cannot vote again that would be unfair :)");
+				/* from: http://stackoverflow.com/questions/1423777/how-can-i-check-whether-a-radio-button-is-selected-with-javascript */
+				/* Makes sure an option is selected, if yes, submission resumes. */
 			} else if ($('input[name=option]:checked').length > 0) {
 				e.target.submit();
 			} else {
+				/* Asks to select for an option is none is selected. */
 				alert("Please select an option to vote for.");
 			}
 		});
+		/* If the delete button is clicked to delete a poll. */
 		$(".delete-button-inPollPage").click(function() {
+			/* Confirms that the user wants to delete it. */
 			if (confirm("Are you sure you want to delete the poll '" + name + "'")) {
+				/* If yes, a delete request is sent with the poll's name. */
 				$.ajax({
 					type: "DELETE",
 					url: "/delete/" + name
 				}).done(function() {
+					/* When status 200 is received, the page home page is loaded. */
 					//The following is better than using window.location.href ="/", because replace() does not keep the originating page in the session history, meaning the user won't get stuck in a never-ending back-button fiasco. 
 					window.location.replace("/");
 				});
 			}
 		});
+		/* The variables saves the current poll URL to be used when share button is clicked. */
 		var link = window.location.href;
+		/* Event handler for clicking share button. From facebook documentation. */
 		document.getElementById('share').onclick = function() {
 			FB.ui({
 		    	method: 'share',
