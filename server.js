@@ -30,7 +30,7 @@ passport.use(new Strategy({
     clientID: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
     /* Do not redirect to root. return root uses another function needed for authentication, that function cannot work with root. */
-    callbackURL: 'http://localhost:8085/login/facebook/return'
+    callbackURL: 'https://voting-vortex.herokuapp.com/login/facebook/return'
   },
   function(accessToken, refreshToken, profile, cb) {
   	/* Comments below from Passport example code. */
@@ -151,7 +151,7 @@ MongoClient.connect(mongoUrl, function(err, db) {
 		/* Facebook logout request. */
   		app.get('/logout', function(req, res){
 		    req.logout();
-		    if (req.header('Referer') == "http://localhost:8085/mypolls") {
+		    if (req.header('Referer') == "https://voting-vortex.herokuapp.com/mypolls") {
 			    /* If the user was on mypolls page, they are directed to the home page. */
 			    res.redirect("/");
 		    } else {
