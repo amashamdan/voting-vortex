@@ -6,6 +6,7 @@
 	<title>Voting Vortex</title>
 	<link rel="stylesheet" href="stylesheets/screen.css"/>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="/scripts/newPollHandlers.js"></script>
 </head>
 <body>
 	<div class="container">
@@ -64,55 +65,6 @@
 			</div>
 		</div>
 	</div>
-	<script>
-		$(document).ready(function() {
-			$.get("/home", function(data) {
-				$(".poll-list").empty();
-				for (var entry in data) {
-					var poll = data[entry].name;
-					var votes = data[entry].votes;
-					var id = data[entry].id;
-					$(".poll-list").append("<li id="+poll+" class='poll-item'><a href='/polls/"+id+"'>"+poll+" <span>("+votes+" voted!)</span></a></li>");
-					$(".poll-item").slideDown();
-				}
-			});
-			$("#new-poll-button").click(function() {
-				$(".layer, .new-poll").fadeToggle();
-			})
-			$("#add-option").click(function(e) {
-				e.preventDefault();
-				$(".new-poll-options").append('<input class="input-field" placeholder="Option" type="text" name="option">');
-			});
-			$("#new-form-cancel").click(function(e) {
-				e.preventDefault();
-				document.getElementById("new-poll-form").reset();
-				$(".layer, .new-poll").fadeToggle();
-			});
-			$("#remove-option").click(function(e) {
-				e.preventDefault();
-				console.log($(".new-poll-options:last-child").val())
-				$(".new-poll-options").children().last().remove();
-			});
-			$("#new-poll-form").on("submit", function(e) {
-				e.preventDefault();
-				var allFilled = true;
-				var numberOfOptions = 0;
-				$(".input-field").each(function(i) {
-					numberOfOptions++;
-					if ($(this).val() == "" || $(this).val() == " ") {
-						allFilled = false;
-					}
-				});
-
-				if (!allFilled) {
-					alert("Please make sure all field are filled.");
-				} else if (numberOfOptions < 3) {
-					alert("Please enter two options at least... It's not a poll with less than two options :)");
-				} else {
-					e.target.submit();
-				}
-			});
-		})
-	</script>
+	<script src="scripts/index.js"></script>
 </body>
 </html>

@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="/stylesheets/screen.css"/>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.bundle.min.js"></script>
-	
+	<script src="/scripts/newPollHandlers.js"></script>
 </head>
 <body>
 	<!-- Facebook JavaScript SDK, used to enable share functionality. According to the quick setup guide it should be at the top of the body. It loads the sdk asynchronously. --> 
@@ -168,42 +168,6 @@
 				alert("Please select an option to vote for.");
 			}
 		});
-		$("#new-poll-button").click(function() {
-			$(".layer, .new-poll").fadeToggle();
-		})
-		$("#add-option").click(function(e) {
-			e.preventDefault();
-			$(".new-poll-options").append('<input class="input-field" placeholder="Option" type="text" name="option">');
-		});
-		$("#new-form-cancel").click(function(e) {
-			e.preventDefault();
-			document.getElementById("new-poll-form").reset();
-			$(".layer, .new-poll").fadeToggle();
-		});
-		$("#remove-option").click(function(e) {
-			e.preventDefault();
-			console.log($(".new-poll-options:last-child").val())
-			$(".new-poll-options").children().last().remove();
-		});
-		$("#new-poll-form").on("submit", function(e) {
-			e.preventDefault();
-			var allFilled = true;
-			var numberOfOptions = 0;
-			$(".input-field").each(function(i) {
-				numberOfOptions++;
-				if ($(this).val() == "" || $(this).val() == " ") {
-					allFilled = false;
-				}
-			});
-
-			if (!allFilled) {
-				alert("Please make sure all field are filled.");
-			} else if (numberOfOptions < 3) {
-				alert("Please enter two options at least... It's not a poll with less than two options :)");
-			} else {
-				e.target.submit();
-			}
-		});
 		$(".delete-button-inPollPage").click(function() {
 			if (confirm("Are you sure you want to delete the poll '" + name + "'")) {
 				$.ajax({
@@ -223,6 +187,7 @@
 		    	href: link
 			}, function(response){});
 		}
+
 	</script>
 </body>
 </html>
