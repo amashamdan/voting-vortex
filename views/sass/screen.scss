@@ -1,5 +1,6 @@
 $theme-color: #297854;
 $delete-color: #ED5E68;
+$facebook-color: #3B5998;
 
 body {
 	font-family: 'Raleway', sans-serif;
@@ -185,10 +186,19 @@ body {
 }
 .sign-in {
 	color: white;
-	background-color: #3B5998;
+	background-color: $facebook-color;
 	border: 1px solid white;
 	padding: 5px;
 	width: 115px;
+	&:hover {
+		cursor: pointer;
+	}
+}
+#share {
+	background-color: $facebook-color;
+	padding: 5px;
+	border: none;
+	color: white;
 	&:hover {
 		cursor: pointer;
 	}
