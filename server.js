@@ -14,6 +14,7 @@ var mongoUrl = process.env.VOTE;
 
 app.use("/stylesheets", express.static(__dirname + "/views/stylesheets"));
 
+app.use("/scripts", express.static(__dirname + "/views/scripts"));
 
 // Configure the Facebook strategy for use by Passport.
 //
