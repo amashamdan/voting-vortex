@@ -1,5 +1,6 @@
 /* load needed packages/ */
 var express = require("express");
+var secure = require('express-force-https');
 var mongodb = require("mongodb");
 var ejs = require("ejs");
 /* To lookup docs in mongo by id */
@@ -12,6 +13,8 @@ var passport = require('passport');
 var Strategy = require('passport-facebook').Strategy;
 /* Creating express instance */
 var app = express();
+/* To force https when http is used. */
+app.use(secure);
 var MongoClient = mongodb.MongoClient;
 /* The url to connect to the database is saved in environment variables. */
 var mongoUrl = process.env.VOTE;
