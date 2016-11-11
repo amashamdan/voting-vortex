@@ -80,9 +80,6 @@ MongoClient.connect(mongoUrl, function(err, db) {
 		var polls = db.collection("polls");
 		/* get request on root. */
 		app.get("/", function(req, res) {
-			if (location.protocol != 'https:'){
-			 location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
-			}
 			/* renders index.ejs and send user information. req.user is added by passport. If not logged in, user becomes undefined. */
 			res.render("index.ejs", {user: req.user});
 		});
